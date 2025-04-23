@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kviz - Pitanje {{ index }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        form { margin: 20px auto; }
+        input[type="radio"] { margin: 10px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>Pitanje {{ index }} od {{ total }}</h1>
+    <p>{{ question.question }}</p>
+    <form method="POST">
+        {% for option in question.options %}
+            <input type="radio" name="answer" value="{{ option }}" required> {{ option }}<br>
+        {% endfor %}
+        <button type="submit">Pošalji</button>
+    </form>
+</body>
+</html>
