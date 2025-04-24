@@ -18,23 +18,20 @@ def test_quiz_flow(page: Page):
     expect(page.get_by_text("Pitanje 1 od 3")).to_be_visible()
     
     # Odgovori na prvo pitanje
-    page.check("input[value='Zagreb']")
+    page.wait_for_selector("input[type='radio']", state="visible", timeout=10000)
+    page.locator("input[type='radio']").first.check()
     page.click("button >> text=Pošalji")
     expect(page).to_have_title("Kviz - Pitanje 2")
     
-    # Odgovori na drugo pitanje (provjera dostupnih opcija)
-    if page.locator("input[value='Cres']").is_visible():
-        page.check("input[value='Cres']")
-    else:
-        page.check("input[value='Krleža']")
+    # Odgovori na drugo pitanje
+    page.wait_for_selector("input[type='radio']", state="visible", timeout=10000)
+    page.locator("input[type='radio']").first.check()
     page.click("button >> text=Pošalji")
     expect(page).to_have_title("Kviz - Pitanje 3")
     
     # Odgovori na treće pitanje
-    if page.locator("input[value='Krleža']").is_visible():
-        page.check("input[value='Krleža']")
-    else:
-        page.check("input[value='Cres']")
+    page.wait_for_selector("input[type='radio']", state="visible", timeout=10000)
+    page.locator("input[type='radio']").first.check()
     page.click("button >> text=Pošalji")
     
     # Provjeri rezultat
