@@ -28,23 +28,36 @@ def quiz():
         session['questions'] = random.sample(questions, 3)
         session['current'] = 0
         session['score'] = 0
-
+        session['answers'] = []  # Lista za pohranu odgovora
+    
     if request.method == 'POST':
         user_answer = request.form.get('answer')
         correct_answer = session['questions'][session['current']]['answer']
+        question_text = session['questions'][session['current']]['question']
+        
+        # Pohrani odgovor
+        session['answers'].append({
+            'question': question_text,
+            'user_answer': user_answer,
+            'correct_answer': correct_answer
+        })
+        
+        # Provjeri točnost i ažuriraj rezultat
         if user_answer == correct_answer:
             session['score'] += 1
         session['current'] += 1
-
+        
+        # Ako su sva pitanja odgovorena
         if session['current'] >= len(session['questions']):
             score = session['score']
+            answers = session['answers']
             session.clear()
-            return render_template('results.html', score=score, total=len(questions))
-
+            return render_template('results.html', score=score, total=len(answers), answers=answers)
+    
     if session['current'] < len(session['questions']):
         question = session['questions'][session['current']]
         return render_template('quiz.html', question=question, current=session['current'] + 1, total=len(session['questions']))
-
+    
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
