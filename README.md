@@ -1,20 +1,26 @@
 # Knowledge quiz
 
 ## Description
-Built a simple **Quiz** application using **Python** and **Flask** for development.
-Deployed on a **Hetzner VPS** using **Docker** and **Nginx** for deployment.
+Built a simple Quiz application using Python and Flask for development. Deployed on a Hetzner VPS using Docker, Nginx as a reverse proxy, and Certbot for HTTPS. The application is publicly available at https://kvizap.duckdns.org.
 
 ## Features
 - **Answer Questions**: Accessible through a web interface
-- **Public Availability**: [http://37.27.8.233:5001](http://37.27.8.233:5001)
+- **Public Availability**: Hosted at https://kvizap.duckdns.org with HTTPS.
 - **Result Display**: Shows score at the end with option to restart
 
 ## Technologies
 ### Technology Stack
-- **Backend**: **Python** with **Flask** for web requests
-- **Frontend**: **HTML** with **Jinja2** for the user interface
-- **Deployment**: **Docker** for containerization, **Nginx** as reverse proxy
-- **Hosting**: **Hetzner Cloud VPS** (**CAX11**), Specs: **2 vCPU**, **4 GB RAM**, **40 GB** disk
+Backend: Python with Flask for web requests.
+Frontend: HTML with Jinja2 for the user interface.
+Containerization: Docker and docker-compose for service orchestration.
+Web Server: Nginx as a reverse proxy with HTTPS support.
+SSL: Certbot for Let's Encrypt certificates.
+CI/CD: GitHub Actions with Playwright for automated testing.
+Hosting: Hetzner Cloud VPS (CAX11, Specs: 2 vCPU, 4 GB RAM, 40 GB disk).
+
+
+
+Domain: DuckDNS for free domain name.
 
 ## Project Setup from Scratch
 
@@ -181,14 +187,55 @@ Committed the Dockerfile:
 git add Dockerfile
 git commit -m "Add Dockerfile"
 ```
-
+#### 2.2. Adding docker-compose.yml
+Created docker-compose.yml to orchestrate kviz-app, nginx, and certbot services:
+```bash
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "5001:5001"
+    volumes:
+      - .:/app
+    networks:
+      - quiz-network
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certbot/conf:/etc/letsencrypt:ro
+      - ./certbot/www:/var/www/certbot:ro
+    depends_on:
+      - app
+    networks:
+      - quiz-network
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    networks:
+      - quiz-network
+networks:
+  quiz-network:
+    driver: bridge
+```
 #### 2.3. Pushing to GitHub
 ```bash
 git remote add origin https://github.com/Tomo1912/kviz-app.git
 git branch -M main
 git push -u origin main
 ```
-
+#### 2.3 Committed docker-compose.yml:
+```bash
+git add docker-compose.yml
+git commit -m "Add docker-compose.yml for kviz-app, nginx, and certbot services"
+```
 ### 3. Deployment on Hetzner VPS
 #### 3.1. Creating the VPS
 Set up a **Hetzner CAX11** server with **Ubuntu 24.04**.
@@ -198,8 +245,96 @@ Connected via SSH:
 ```bash
 ssh root@37.27.8.233
 ```
+#### 2.4 Configuring Nginx for HTTPS
+Created nginx-certbot.conf for Certbot validation:
+```bash
+events {}
 
-#### 3.3. Installing Required Tools
+http {
+    server {
+        listen 80;
+        server_name kvizap.duckdns.org;
+
+        location /.well-known/acme-challenge/ {
+            root /var/www/certbot;
+        }
+
+        location / {
+            return 404;
+        }
+    }
+}
+```
+Created nginx.conf for Nginx reverse proxy and HTTPS:
+```bash
+events {}
+
+http {
+    server {
+        listen 80;
+        server_name kvizap.duckdns.org;
+
+        location /.well-known/acme-challenge/ {
+            root /var/www/certbot;
+        }
+
+        location / {
+            return 301 https://$host$request_uri;
+        }
+    }
+
+    server {
+        listen 443 ssl;
+        server_name kvizap.duckdns.org;
+
+        ssl_certificate /etc/letsencrypt/live/kvizap.duckdns.org/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/kvizap.duckdns.org/privkey.pem;
+
+        location / {
+            proxy_pass http://app:5001;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+}
+```
+Committed Nginx configurations:
+```bash
+git add nginx-certbot.conf nginx.conf
+git commit -m "Add nginx-certbot.conf for Certbot validation and nginx.conf for HTTPS"
+```
+#### 2.5 Setting up SSL with Certbot
+Ran a temporary Nginx container for Certbot validation:
+```bash
+docker run -d --name temp-nginx -v $(pwd)/nginx-certbot.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/certbot/www:/var/www/certbot:ro -p 80:80 nginx:latest
+```
+Obtained SSL certificates:
+```bash
+docker run --rm -v $(pwd)/certbot/conf:/etc/letsencrypt -v $(pwd)/certbot/www:/var/www/certbot certbot/certbot certonly --webroot --webroot-path=/var/www/certbot -d kvizap.duckdns.org --non-interactive --agree-tos --email maurs993@gmail.com
+```
+
+Stopped and removed temporary Nginx:
+```bash
+docker stop temp-nginx
+docker rm temp-nginx
+```
+#### 2.6 Running with Docker compose
+```bash
+docker-compose up -d
+```
+#### 2.7 Pushing to GitHub
+Initialized Git and pushed files:
+```bash
+git init
+git add app.py templates/index.html templates/quiz.html templates/results.html requirements.txt Dockerfile docker-compose.yml nginx.conf nginx-certbot.conf
+git commit -m "Initial Quiz App with HTTPS, Nginx, and docker-compose"
+git remote add origin https://github.com/Tomo1912/kviz-app.git
+git branch -M main
+git push -u origin main
+```
+#### 3. Installing Required Tools
 ```bash
 apt update
 apt install -y git nginx
@@ -207,39 +342,14 @@ curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
 ```
 
-#### 3.4. Cloning the Repository
+#### 3.1. Cloning the Repository
 ```bash
 cd ~
 git clone https://github.com/tvoj-username/kviz-app.git
 cd kviz-app
 ```
 
-#### 3.5. Running the App with Docker
+#### 3.2. Running the App with Docker Compose
 ```bash
-docker build -t kviz-app .
-docker run -d --name kviz-app -p 5001:5001 kviz-app
-docker ps
-```
-
-#### 3.6. Configuring Nginx as a Reverse Proxy
-```bash
-nano /etc/nginx/sites-available/default
-```
-
-Added configuration:
-```nginx
-server {
-    listen 80;
-    server_name kviz-app;
-    location / {
-        proxy_pass http://localhost:5001;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-}
-```
-
-Restarted Nginx:
-```bash
-systemctl restart nginx
+docker-compose up -d
 ```
