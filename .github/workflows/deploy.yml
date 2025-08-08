@@ -1,61 +1,39 @@
-name: Deploy Kviz to AWS
+name: Deploy Multi-Container App to AWS
 
-# This workflow is triggered on every push to the 'main' branch
 on:
   push:
     branches:
       - main
 
-# Define environment variables for the workflow
 env:
   AWS_REGION: eu-central-1
   EB_APPLICATION_NAME: kviz-portfolio
   EB_ENVIRONMENT_NAME: Kviz-portfolio-env
-  ECR_REPOSITORY: kviz-portfolio
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write   # Required to fetch the OIDC token
-      contents: read    # Required to check out the repository code
+      id-token: write
+      contents: read
 
     steps:
-      # Step 1: Check out your repository code
+
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Configure AWS credentials using OIDC
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::410293310465:role/github-kvizapp-role # Your specific ARN
+          role-to-assume: arn:aws:iam::410293310465:role/github-kvizapp-role
           aws-region: ${{ env.AWS_REGION }}
 
-      # Step 3: Log in to Amazon ECR (the Docker image repository)
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
 
-      # Step 4: Build, tag, and push the Docker image to ECR
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          # Create ECR repository if it doesn't exist
-          aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY }} > /dev/null 2>&1 || aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY }} > /dev/null
-          # Build, tag, and push the image
-          docker build -t $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG" >> $GITHUB_OUTPUT
+      - name: Create ZIP deployment package
+        run: zip -r deploy.zip . -x ".git/*"
 
-      # Step 5: Generate the deployment package for Elastic Beanstalk
-      - name: Generate deployment package
-        run: echo '{"AWSEBDockerrunVersion": "1", "Image": {"Name": "${{ steps.build-image.outputs.image }}", "Update": "true"}, "Ports": [{"ContainerPort": "5001"}]}' > Dockerrun.aws.json
 
-      # Step 6: Deploy to Elastic Beanstalk
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v21
         with:
@@ -63,4 +41,4 @@ jobs:
           environment_name: ${{ env.EB_ENVIRONMENT_NAME }}
           region: ${{ env.AWS_REGION }}
           version_label: ${{ github.sha }}
-          deployment_package: Dockerrun.aws.json
+          deployment_package: deploy.zip
