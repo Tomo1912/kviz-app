@@ -18,25 +18,26 @@ jobs:
       contents: read
 
     steps:
-
+      # Step 1: Check out your repository code
       - name: Checkout code
         uses: actions/checkout@v3
 
-
+      # Step 2: Configure AWS credentials using OIDC
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::410293310465:role/github-kvizapp-role
+          role-to-assume: arn:aws:iam::410293310465:role/github-kvizapp-role # Your ARN
           aws-region: ${{ env.AWS_REGION }}
 
-
+      # Step 3: Create a ZIP archive of the entire project
       - name: Create ZIP deployment package
         run: zip -r deploy.zip . -x ".git/*"
 
-
+      # Step 4: Deploy the ZIP archive to Elastic Beanstalk
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v21
         with:
+          # The next two lines that required secrets are now REMOVED
           application_name: ${{ env.EB_APPLICATION_NAME }}
           environment_name: ${{ env.EB_ENVIRONMENT_NAME }}
           region: ${{ env.AWS_REGION }}
