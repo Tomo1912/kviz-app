@@ -353,3 +353,109 @@ cd kviz-app
 ```bash
 docker-compose up -d
 ```
+---
+
+## 🚀 Automated CI/CD Deployment to AWS
+
+This section details the modern, automated deployment pipeline built as an extension to this project, demonstrating best practices in cloud infrastructure and DevOps.
+
+### Architecture Overview
+
+The system is designed for zero-touch deployments, where a `git push` to the main branch triggers the entire process.
+
+```
+┌───────────────┐      ┌──────────────┐      ┌──────────────────────────┐
+│   Developer   │──────│   Git Push   │──────│      GitHub Actions      │
+└───────────────┘      └──────────────┘      └──────────────────────────┘
+       │                      │                         │ 1. Connect to AWS (OIDC)
+       │                      │                         │ 2. Package Application
+       └──────────────────────┴─────────────────────────┘ 3. Deploy to AWS
+                                                               │
+                                                               ▼
+                                                 ┌──────────────────────────┐
+                                                 │ AWS Elastic Beanstalk    │
+                                                 │ ------------------------ │
+                                                 │ ∙ Runs docker-compose    │
+                                                 │ ∙ Manages Nginx & App    │
+                                                 └──────────────────────────┘
+```
+
+### Technology Stack (CI/CD & Cloud)
+
+- **Cloud Platform:** AWS (Amazon Web Services)
+- **Orchestration:** AWS Elastic Beanstalk (Docker Platform)
+- **CI/CD:** GitHub Actions
+- **Security & Identity:** AWS IAM (Identity and Access Management) with an **OIDC Connector**.
+
+---
+
+### Detailed Setup Guide
+
+This guide outlines the key steps required to configure the AWS infrastructure and the GitHub Actions workflow.
+
+#### Step 1: Setting Up the AWS Elastic Beanstalk Environment
+1.  Navigate to the **AWS Elastic Beanstalk** service.
+2.  Click **"Create application"** and configure the basics:
+    -   **Application name:** `kviz-portfolio`
+    -   **Platform:** Select **"Docker"**.
+    -   **Application code:** Keep **"Sample application"** selected for the initial setup.
+3.  If prompted, create and select the default service roles (`aws-elasticbeanstalk-service-role` and `aws-elasticbeanstalk-ec2-role`).
+4.  Launch the environment and wait for its health status to become **Ok**.
+
+#### Step 2: Configuring the Secure Bridge (IAM & OIDC)
+This is the most critical part for security. We will allow GitHub Actions to securely connect to AWS without storing any long-term keys.
+
+##### 2.1: Create the OIDC Identity Provider
+1.  Navigate to the **IAM** service in the AWS Console.
+2.  Go to **Identity providers** and click **"Add provider"**.
+3.  Select **"OpenID Connect"**.
+4.  For **Provider URL**, enter: `https://token.actions.githubusercontent.com`
+5.  For **Audience**, enter: `sts.amazonaws.com`
+6.  Click **"Add provider"**.
+
+##### 2.2: Create the IAM Role for GitHub Actions
+1.  In IAM, go to **Roles** and click **"Create role"**.
+2.  For **Trusted entity type**, select **"Web identity"**.
+3.  In the **Identity provider** dropdown, choose the `token.actions.githubusercontent.com` provider you just created.
+4.  For **Audience**, choose `sts.amazonaws.com`.
+5.  Fill in your GitHub details to restrict access:
+    -   **GitHub organization:** Your GitHub username (e.g., `Tomo1912`).
+    -   **GitHub repository:** The name of your repository (e.g., `kviz-app`).
+    -   **GitHub branch:** `main`.
+6.  Click **Next**.
+7.  On the "Add permissions" screen, search for and attach the following two AWS Managed Policies:
+    -   **`AdministratorAccess-AWSElasticBeanstalk`**: Allows GitHub Actions to create new application versions and update the Elastic Beanstalk environment.
+    -   **`AmazonS3FullAccess`**: Required for the workflow to create a temporary S3 bucket, upload the application source bundle (`.zip`), and then clean it up.
+8.  Click **Next**.
+9.  Give the role a descriptive name, like `github-kvizapp-role`.
+10. Click **"Create role"**.
+11. **IMPORTANT:** Click on the newly created role and **copy its ARN**. You will need it for the workflow file.
+
+#### Step 3: Creating the GitHub Actions Workflow
+The final step is to create the `.github/workflows/deploy.yml` file in the repository. This file contains the instructions for the CI/CD process. The workflow performs the following actions:
+- Authenticates with AWS using the OIDC role created above.
+- Zips the application source code.
+- Uploads the package to a temporary S3 bucket.
+- Creates a new application version in Elastic Beanstalk from the S3 source.
+- Deploys the new version to the environment.
+- Cleans up the temporary S3 bucket.
+
+### Result
+
+The application was successfully deployed and is accessible on a public domain provided by Elastic Beanstalk.
+
+<img width="1130" height="281" alt="Screenshot 2025-08-08 at 17 15 27" src="https://github.com/user-attachments/assets/87a416ab-ed48-40d1-87df-9989de8fa9c1" />
+
+---
+
+### ⚠️ AWS Resource Cleanup
+
+As the AWS deployment is a portfolio project, it is crucial to **delete all created resources after the demonstration** to avoid unnecessary costs.
+
+1.  Navigate to **AWS Elastic Beanstalk** in the AWS Console.
+2.  Select the environment named `Kviz-portfolio-env`.
+3.  In the top-right corner, click the **Actions** dropdown menu.
+4.  Choose the **"Terminate Environment"** option.
+5.  Confirm the termination by typing the environment's name.
+
+This single step will automatically delete **all** associated resources that Elastic Beanstalk created (EC2 servers, Load Balancer, security groups, etc.), leaving your AWS account clean.
