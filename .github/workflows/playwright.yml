@@ -18,31 +18,14 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        sudo apt-get install -y curl net-tools # Dodaj net-tools za lsof/netstat
         python -m playwright install --with-deps
         
     - name: Run Flask app in Background
-      # Koristi localhost i pokreni u pozadini, kao što je bilo.
-      run: gunicorn --bind 127.0.0.1:5001 app:app &
+      # OVO JE KLJUČNO: Pozivamo funkciju 'create_app()' umjesto varijable 'app'
+      run: gunicorn --bind 127.0.0.1:5001 'app:create_app()' &
       
-    - name: Wait for server to be ready (Final Robust Check)
-      run: |
-        set -e
-        echo "Cekam do 30 sekundi da se Gunicorn digne na 127.0.0.1:5001..."
-        
-        # Prvo: provjeri je li proces (Gunicorn) uopce pokrenut (koristeci pgrep)
-        timeout 30 bash -c 'while ! pgrep -f "gunicorn" ; do echo "Gunicorn proces se jos dize..."; sleep 2; done'
-        
-        # Drugo: provjeri je li port otvoren (koristeci curl)
-        timeout 30 bash -c \
-        'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://127.0.0.1:5001)" != "200" ]]; \
-        do 
-          echo "Port 5001 jos nije vratio 200 OK, cekam 2 sekunde..."
-          sleep 2; 
-        done'
-        echo "Server je SPREMAN!"
-
     - name: Run tests
+      # Playwright ce automatski pricekati da server krene (sa default timeoutom)
       run: pytest --tracing=retain-on-failure
       
     - uses: actions/upload-artifact@v4
