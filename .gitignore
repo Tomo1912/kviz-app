@@ -1,4 +1,17 @@
+# Python Virtual Environment
 venv/
-certbot/
+
+# Project configuration (from IDEs like IntelliJ/PyCharm)
 .idea/
 *.iml
+
+# OSETLJIVE I GENERIRANE DATOTEKE!
+# Uklanjanje lokalnih certifikata i ključeva
+localhost.crt
+localhost.key
+
+# Uklanjanje privremenih Nginx konfiguracija
+nginx-certbot.conf
+
+# Cijeli certbot direktorij koji sadrži ključeve
+certbot/
