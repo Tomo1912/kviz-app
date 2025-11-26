@@ -18,25 +18,29 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        # Instalacija curl i timeout alata za provjeru servera
-        sudo apt-get install -y curl coreutils 
+        sudo apt-get install -y curl net-tools # Dodaj net-tools za lsof/netstat
         python -m playwright install --with-deps
         
-    - name: Run Flask app
-      # MIJENJAMO BIND ADRESU NA 127.0.0.1 (Lokalna CI adresa)
-      run: gunicorn --bind 127.0.0.1:5001 app:app & 
-
-    - name: Wait for server to be ready (Robust Check)
-      # Ova skripta provjerava port 5001 dok ne dobije 200 OK.
+    - name: Run Flask app in Background
+      # Koristi localhost i pokreni u pozadini, kao što je bilo.
+      run: gunicorn --bind 127.0.0.1:5001 app:app &
+      
+    - name: Wait for server to be ready (Final Robust Check)
       run: |
         set -e
-        echo "Cekam da server krene na 127.0.0.1:5001..."
-        timeout 60 bash -c \
+        echo "Cekam do 30 sekundi da se Gunicorn digne na 127.0.0.1:5001..."
+        
+        # Prvo: provjeri je li proces (Gunicorn) uopce pokrenut (koristeci pgrep)
+        timeout 30 bash -c 'while ! pgrep -f "gunicorn" ; do echo "Gunicorn proces se jos dize..."; sleep 2; done'
+        
+        # Drugo: provjeri je li port otvoren (koristeci curl)
+        timeout 30 bash -c \
         'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://127.0.0.1:5001)" != "200" ]]; \
         do 
-          echo "Server nije spreman, cekam 2 sekunde..."
+          echo "Port 5001 jos nije vratio 200 OK, cekam 2 sekunde..."
           sleep 2; 
         done'
+        echo "Server je SPREMAN!"
 
     - name: Run tests
       run: pytest --tracing=retain-on-failure
