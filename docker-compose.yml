@@ -25,6 +25,8 @@ services:
     networks:
       - kviz-network
     restart: unless-stopped
+    command: >
+      /bin/sh -c "rm -f /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
 
 networks:
   kviz-network:
