@@ -1,0 +1,902 @@
+[
+    {
+        "question": "Which command is used to change the permissions of a file in Linux?",
+        "options": [
+            "chown",
+            "chmod",
+            "chgrp"
+        ],
+        "answer": "chmod"
+    },
+    {
+        "question": "What does the 'ls -l' command do?",
+        "options": [
+            "Lists files in long format",
+            "Lists all files including hidden ones",
+            "Lists files sorted by time"
+        ],
+        "answer": "Lists files in long format"
+    },
+    {
+        "question": "Which command displays the current working directory?",
+        "options": [
+            "pwd",
+            "cwd",
+            "dir"
+        ],
+        "answer": "pwd"
+    },
+    {
+        "question": "How do you search for a specific string in a file?",
+        "options": [
+            "find",
+            "grep",
+            "search"
+        ],
+        "answer": "grep"
+    },
+    {
+        "question": "Which command outputs the last few lines of a file?",
+        "options": [
+            "head",
+            "tail",
+            "bottom"
+        ],
+        "answer": "tail"
+    },
+    {
+        "question": "What is the PID of the init process?",
+        "options": [
+            "0",
+            "1",
+            "100"
+        ],
+        "answer": "1"
+    },
+    {
+        "question": "Which command lists all running processes?",
+        "options": [
+            "ps aux",
+            "ls proc",
+            "top -l"
+        ],
+        "answer": "ps aux"
+    },
+    {
+        "question": "How do you recursively remove a directory and its contents?",
+        "options": [
+            "rm -r",
+            "rm -d",
+            "rmdir"
+        ],
+        "answer": "rm -r"
+    },
+    {
+        "question": "Which symbol sends command output to a file, overwriting it?",
+        "options": [
+            ">",
+            ">>",
+            "|"
+        ],
+        "answer": ">"
+    },
+    {
+        "question": "What does 'chmod 777' grant?",
+        "options": [
+            "Read/Write/Execute for everyone",
+            "Read only for everyone",
+            "Execute only for owner"
+        ],
+        "answer": "Read/Write/Execute for everyone"
+    },
+    {
+        "question": "Which command shows disk usage of files and directories?",
+        "options": [
+            "df",
+            "du",
+            "disk"
+        ],
+        "answer": "du"
+    },
+    {
+        "question": "How do you view manual pages for a command?",
+        "options": [
+            "help",
+            "man",
+            "info"
+        ],
+        "answer": "man"
+    },
+    {
+        "question": "Which command creates an empty file?",
+        "options": [
+            "touch",
+            "cat",
+            "mkfile"
+        ],
+        "answer": "touch"
+    },
+    {
+        "question": "What is the default signal sent by the 'kill' command?",
+        "options": [
+            "SIGKILL",
+            "SIGTERM",
+            "SIGSTOP"
+        ],
+        "answer": "SIGTERM"
+    },
+    {
+        "question": "Which directory contains system configuration files?",
+        "options": [
+            "/bin",
+            "/etc",
+            "/var"
+        ],
+        "answer": "/etc"
+    },
+    {
+        "question": "How do you follow the output of a log file in real-time?",
+        "options": [
+            "tail -f",
+            "cat -f",
+            "less -f"
+        ],
+        "answer": "tail -f"
+    },
+    {
+        "question": "Which command combines file contents or displays them?",
+        "options": [
+            "cat",
+            "dog",
+            "combine"
+        ],
+        "answer": "cat"
+    },
+    {
+        "question": "What commands prints the disk usage of filesystems?",
+        "options": [
+            "df",
+            "du",
+            "fs"
+        ],
+        "answer": "df"
+    },
+    {
+        "question": "Which command is used to schedule periodic tasks?",
+        "options": [
+            "at",
+            "crontab",
+            "batch"
+        ],
+        "answer": "crontab"
+    },
+    {
+        "question": "How do you check the kernel version?",
+        "options": [
+            "uname -r",
+            "kernel -v",
+            "linux -v"
+        ],
+        "answer": "uname -r"
+    },
+    {
+        "question": "What does CI stand for in DevOps?",
+        "options": [
+            "Continuous Integration",
+            "Continuous Improvement",
+            "Code Integration"
+        ],
+        "answer": "Continuous Integration"
+    },
+    {
+        "question": "Which of the following is a key DevOps principle?",
+        "options": [
+            "Siloed teams",
+            "Automation",
+            "Manual deployment"
+        ],
+        "answer": "Automation"
+    },
+    {
+        "question": "What is the main goal of Continuous Deployment?",
+        "options": [
+            "Deploy every commit to production",
+            "Deploy once a month",
+            "Manual approval for every release"
+        ],
+        "answer": "Deploy every commit to production"
+    },
+    {
+        "question": "Which concept treats infrastructure provisioning as code?",
+        "options": [
+            "IaC",
+            "SaaS",
+            "PaaS"
+        ],
+        "answer": "IaC"
+    },
+    {
+        "question": "What is 'Shift Left' in DevOps?",
+        "options": [
+            "Testing earlier in the cycle",
+            "Moving servers to the left data center",
+            "Delaying testing until production"
+        ],
+        "answer": "Testing earlier in the cycle"
+    },
+    {
+        "question": "Which metric measures the time from code commit to code running in production?",
+        "options": [
+            "Lead Time",
+            "Cycle Time",
+            "MTTR"
+        ],
+        "answer": "Lead Time"
+    },
+    {
+        "question": "What does MTTR stand for?",
+        "options": [
+            "Mean Time To Recover",
+            "Mean Time To Respond",
+            "Maximum Time To Repair"
+        ],
+        "answer": "Mean Time To Recover"
+    },
+    {
+        "question": "Which of these is a configuration management tool?",
+        "options": [
+            "Ansible",
+            "Jenkins",
+            "Git"
+        ],
+        "answer": "Ansible"
+    },
+    {
+        "question": "What represents the 'C' in the CALMS framework?",
+        "options": [
+            "Culture",
+            "Code",
+            "Cloud"
+        ],
+        "answer": "Culture"
+    },
+    {
+        "question": "What is a 'Blue-Green' deployment?",
+        "options": [
+            "Running two identical environments",
+            "Deploying only on Tuesdays",
+            "Using blue and green servers"
+        ],
+        "answer": "Running two identical environments"
+    },
+    {
+        "question": "Which practice involves merging code changes frequently?",
+        "options": [
+            "Continuous Integration",
+            "Continuous Delivery",
+            "Agile"
+        ],
+        "answer": "Continuous Integration"
+    },
+    {
+        "question": "What is 'Idempotency' in infrastructure automation?",
+        "options": [
+            "Applying the same config multiple times produces the same result",
+            "Random outcomes",
+            "Running only once"
+        ],
+        "answer": "Applying the same config multiple times produces the same result"
+    },
+    {
+        "question": "Which tool is primarily used for artifacts storage?",
+        "options": [
+            "Nexus",
+            "Jenkins",
+            "Terraform"
+        ],
+        "answer": "Nexus"
+    },
+    {
+        "question": "What is 'Chaos Engineering'?",
+        "options": [
+            "Testing system resilience by injecting failures",
+            "Writing messy code",
+            "Unmanaged servers"
+        ],
+        "answer": "Testing system resilience by injecting failures"
+    },
+    {
+        "question": "Which is NOT a phase in the DevOps lifecycle?",
+        "options": [
+            "Plan",
+            "Monitor",
+            "Marketing"
+        ],
+        "answer": "Marketing"
+    },
+    {
+        "question": "What is 'Canary Deployment'?",
+        "options": [
+            "Rolling out to a small subset of users first",
+            "Deploying to everyone at once",
+            "Testing on birds"
+        ],
+        "answer": "Rolling out to a small subset of users first"
+    },
+    {
+        "question": "What helps avoid 'Configuration Drift'?",
+        "options": [
+            "Immutable Infrastructure",
+            "Manual updates",
+            "Long-running servers"
+        ],
+        "answer": "Immutable Infrastructure"
+    },
+    {
+        "question": "Which of these is a monitoring tool?",
+        "options": [
+            "Prometheus",
+            "Docker",
+            "GitLab"
+        ],
+        "answer": "Prometheus"
+    },
+    {
+        "question": "What is the 'Three Ways' of DevOps?",
+        "options": [
+            "Flow, Feedback, Continuous Learning",
+            "Plan, Code, Deploy",
+            "Dev, Sec, Ops"
+        ],
+        "answer": "Flow, Feedback, Continuous Learning"
+    },
+    {
+        "question": "Which tool is commonly used for CI/CD pipelines?",
+        "options": [
+            "Jenkins",
+            "Vagrant",
+            "Nagios"
+        ],
+        "answer": "Jenkins"
+    },
+    {
+        "question": "What command initializes a Terraform working directory?",
+        "options": [
+            "terraform init",
+            "terraform start",
+            "terraform begin"
+        ],
+        "answer": "terraform init"
+    },
+    {
+        "question": "Which file stores the current state of Terraform resources?",
+        "options": [
+            "terraform.tfstate",
+            "state.json",
+            "main.tf"
+        ],
+        "answer": "terraform.tfstate"
+    },
+    {
+        "question": "How do you preview changes before applying them in Terraform?",
+        "options": [
+            "terraform plan",
+            "terraform dry-run",
+            "terraform check"
+        ],
+        "answer": "terraform plan"
+    },
+    {
+        "question": "What is the primary file extension for Terraform configuration files?",
+        "options": [
+            ".tf",
+            ".tfc",
+            ".hcl"
+        ],
+        "answer": ".tf"
+    },
+    {
+        "question": "Which command applies the changes required to reach the desired state?",
+        "options": [
+            "terraform apply",
+            "terraform run",
+            "terraform go"
+        ],
+        "answer": "terraform apply"
+    },
+    {
+        "question": "How do you destroy all resources managed by a Terraform configuration?",
+        "options": [
+            "terraform destroy",
+            "terraform delete",
+            "terraform remove"
+        ],
+        "answer": "terraform destroy"
+    },
+    {
+        "question": "What is a 'Module' in Terraform?",
+        "options": [
+            "A container for multiple resources that are used together",
+            "A plugin",
+            "A specific provider"
+        ],
+        "answer": "A container for multiple resources that are used together"
+    },
+    {
+        "question": "Which block type is used to configure a cloud provider like AWS?",
+        "options": [
+            "provider",
+            "resource",
+            "data"
+        ],
+        "answer": "provider"
+    },
+    {
+        "question": "What does 'terraform fmt' do?",
+        "options": [
+            "Formats configuration files to a canonical format",
+            "Formats the hard drive",
+            "Deletes resources"
+        ],
+        "answer": "Formats configuration files to a canonical format"
+    },
+    {
+        "question": "How can you mark a resource as 'tainted' to force recreation?",
+        "options": [
+            "terraform taint",
+            "terraform mark",
+            "terraform dirty"
+        ],
+        "answer": "terraform taint"
+    },
+    {
+        "question": "Which command validates the syntax of Terraform files?",
+        "options": [
+            "terraform validate",
+            "terraform check",
+            "terraform verify"
+        ],
+        "answer": "terraform validate"
+    },
+    {
+        "question": "What is the purpose of the 'output' block?",
+        "options": [
+            "To display data after apply",
+            "To send data to a file",
+            "To print logs"
+        ],
+        "answer": "To display data after apply"
+    },
+    {
+        "question": "Where are Terraform provider plugins stored locally?",
+        "options": [
+            ".terraform directory",
+            "/usr/bin",
+            "In the main.tf file"
+        ],
+        "answer": ".terraform directory"
+    },
+    {
+        "question": "What serves as the 'Single Source of Truth' for Terraform?",
+        "options": [
+            "The State file",
+            "The main.tf file",
+            "The cloud console"
+        ],
+        "answer": "The State file"
+    },
+    {
+        "question": "Which concept allows you to fetch data from outside of Terraform?",
+        "options": [
+            "Data Sources",
+            "Resources",
+            "Variables"
+        ],
+        "answer": "Data Sources"
+    },
+    {
+        "question": "How do you define input variables in Terraform?",
+        "options": [
+            "variable \"name\" {}",
+            "input \"name\" {}",
+            "var \"name\" {}"
+        ],
+        "answer": "variable \"name\" {}"
+    },
+    {
+        "question": "What is 'Remote State'?",
+        "options": [
+            "Storing state file in a remote backend like S3",
+            "Running Terraform on a remote server",
+            "Controlling remote machines"
+        ],
+        "answer": "Storing state file in a remote backend like S3"
+    },
+    {
+        "question": "Which function reads the contents of a file?",
+        "options": [
+            "file()",
+            "read()",
+            "cat()"
+        ],
+        "answer": "file()"
+    },
+    {
+        "question": "What is the default filename for variable definitions?",
+        "options": [
+            "terraform.tfvars",
+            "vars.tf",
+            "variables.json"
+        ],
+        "answer": "terraform.tfvars"
+    },
+    {
+        "question": "How do you import existing infrastructure into Terraform?",
+        "options": [
+            "terraform import",
+            "terraform adopt",
+            "terraform grab"
+        ],
+        "answer": "terraform import"
+    },
+    {
+        "question": "Which command builds a Docker image from a Dockerfile?",
+        "options": [
+            "docker build",
+            "docker create",
+            "docker make"
+        ],
+        "answer": "docker build"
+    },
+    {
+        "question": "How do you list all running containers?",
+        "options": [
+            "docker ps",
+            "docker ls",
+            "docker list"
+        ],
+        "answer": "docker ps"
+    },
+    {
+        "question": "What is the name of the file used to define a Docker image?",
+        "options": [
+            "Dockerfile",
+            "Dockerimage",
+            "DOCKER"
+        ],
+        "answer": "Dockerfile"
+    },
+    {
+        "question": "Which command runs a command in a new container?",
+        "options": [
+            "docker run",
+            "docker start",
+            "docker exec"
+        ],
+        "answer": "docker run"
+    },
+    {
+        "question": "How to stop a running container?",
+        "options": [
+            "docker stop",
+            "docker kill",
+            "docker halt"
+        ],
+        "answer": "docker stop"
+    },
+    {
+        "question": "What is a Docker 'Volume' used for?",
+        "options": [
+            "Persisting data",
+            "Networking",
+            "CPU allocation"
+        ],
+        "answer": "Persisting data"
+    },
+    {
+        "question": "Which command shows the logs of a container?",
+        "options": [
+            "docker logs",
+            "docker output",
+            "docker show"
+        ],
+        "answer": "docker logs"
+    },
+    {
+        "question": "How do you access a running container's shell?",
+        "options": [
+            "docker exec -it",
+            "docker ssh",
+            "docker attach"
+        ],
+        "answer": "docker exec -it"
+    },
+    {
+        "question": "What is Docker Compose used for?",
+        "options": [
+            "Defining and running multi-container applications",
+            "Building images",
+            "Monitoring containers"
+        ],
+        "answer": "Defining and running multi-container applications"
+    },
+    {
+        "question": "Which file is used by Docker Compose?",
+        "options": [
+            "docker-compose.yml",
+            "dockerfile.yml",
+            "compose.json"
+        ],
+        "answer": "docker-compose.yml"
+    },
+    {
+        "question": "How do you remove all unused containers, networks, and images?",
+        "options": [
+            "docker system prune",
+            "docker clean all",
+            "docker rm all"
+        ],
+        "answer": "docker system prune"
+    },
+    {
+        "question": "What is the default network driver for a container?",
+        "options": [
+            "bridge",
+            "host",
+            "none"
+        ],
+        "answer": "bridge"
+    },
+    {
+        "question": "Which command pulls an image from a registry?",
+        "options": [
+            "docker pull",
+            "docker fetch",
+            "docker get"
+        ],
+        "answer": "docker pull"
+    },
+    {
+        "question": "What distinguishes an ENTRYPOINT from a CMD?",
+        "options": [
+            "ENTRYPOINT commands cannot be overridden easily at runtime",
+            "CMD is always executed first",
+            "There is no difference"
+        ],
+        "answer": "ENTRYPOINT commands cannot be overridden easily at runtime"
+    },
+    {
+        "question": "How do you list all Docker images on the host?",
+        "options": [
+            "docker images",
+            "docker list images",
+            "docker show images"
+        ],
+        "answer": "docker images"
+    },
+    {
+        "question": "Which flag runs a container in the background (detached mode)?",
+        "options": [
+            "-d",
+            "-b",
+            "-g"
+        ],
+        "answer": "-d"
+    },
+    {
+        "question": "What is a 'Multi-stage build'?",
+        "options": [
+            "Using multiple FROM instructions to optimize image size",
+            "Building on multiple servers",
+            "Building in stages manually"
+        ],
+        "answer": "Using multiple FROM instructions to optimize image size"
+    },
+    {
+        "question": "Which directive copies files from the host to the container image?",
+        "options": [
+            "COPY",
+            "MOVE",
+            "TRANSFER"
+        ],
+        "answer": "COPY"
+    },
+    {
+        "question": "What is the Docker registry used for?",
+        "options": [
+            "Storing and distributing images",
+            "Running containers",
+            "Compiling code"
+        ],
+        "answer": "Storing and distributing images"
+    },
+    {
+        "question": "Which command removes a local image?",
+        "options": [
+            "docker rmi",
+            "docker rm",
+            "docker del"
+        ],
+        "answer": "docker rmi"
+    },
+    {
+        "question": "What is the smallest deployable unit in Kubernetes?",
+        "options": [
+            "Pod",
+            "Node",
+            "Container"
+        ],
+        "answer": "Pod"
+    },
+    {
+        "question": "Which component manages the Kubernetes cluster?",
+        "options": [
+            "Control Plane",
+            "Worker Node",
+            "Kubelet"
+        ],
+        "answer": "Control Plane"
+    },
+    {
+        "question": "What command line tool is used to interact with Kubernetes?",
+        "options": [
+            "kubectl",
+            "kubeadm",
+            "minikube"
+        ],
+        "answer": "kubectl"
+    },
+    {
+        "question": "What resource manages stateless applications?",
+        "options": [
+            "Deployment",
+            "StatefulSet",
+            "DaemonSet"
+        ],
+        "answer": "Deployment"
+    },
+    {
+        "question": "Which object defines a persistent set of Pods with unique identities?",
+        "options": [
+            "StatefulSet",
+            "Deployment",
+            "ReplicaSet"
+        ],
+        "answer": "StatefulSet"
+    },
+    {
+        "question": "What does a 'Service' provide in Kubernetes?",
+        "options": [
+            "Stable networking and load balancing",
+            "Storage",
+            "Processing power"
+        ],
+        "answer": "Stable networking and load balancing"
+    },
+    {
+        "question": "Which component runs on every node and ensures containers are running in a Pod?",
+        "options": [
+            "Kubelet",
+            "Kube-proxy",
+            "Scheduler"
+        ],
+        "answer": "Kubelet"
+    },
+    {
+        "question": "How do you scale a deployment to 5 replicas?",
+        "options": [
+            "kubectl scale --replicas=5",
+            "kubectl resize 5",
+            "kubectl expand 5"
+        ],
+        "answer": "kubectl scale --replicas=5"
+    },
+    {
+        "question": "What is a 'Namespace'?",
+        "options": [
+            "A way to divide cluster resources between users",
+            "A new cluster",
+            "A type of Pod"
+        ],
+        "answer": "A way to divide cluster resources between users"
+    },
+    {
+        "question": "Which resource is used to store sensitive information like passwords?",
+        "options": [
+            "Secret",
+            "ConfigMap",
+            "Volume"
+        ],
+        "answer": "Secret"
+    },
+    {
+        "question": "What is the role of 'etcd'?",
+        "options": [
+            "Key-value store for cluster data",
+            "Networking plugin",
+            "Container runtime"
+        ],
+        "answer": "Key-value store for cluster data"
+    },
+    {
+        "question": "Which resource schedules a Pod to run on every node?",
+        "options": [
+            "DaemonSet",
+            "Deployment",
+            "Job"
+        ],
+        "answer": "DaemonSet"
+    },
+    {
+        "question": "How do you apply a configuration file to the cluster?",
+        "options": [
+            "kubectl apply -f file.yaml",
+            "kubectl run file.yaml",
+            "kubectl create file.yaml"
+        ],
+        "answer": "kubectl apply -f file.yaml"
+    },
+    {
+        "question": "What is an 'Ingress'?",
+        "options": [
+            "Manages external access to services (HTTP/S)",
+            "Internal firewall",
+            "Database connection"
+        ],
+        "answer": "Manages external access to services (HTTP/S)"
+    },
+    {
+        "question": "Which command lists all pods in the current namespace?",
+        "options": [
+            "kubectl get pods",
+            "kubectl list pods",
+            "kubectl show pods"
+        ],
+        "answer": "kubectl get pods"
+    },
+    {
+        "question": "What is used to pass non-sensitive configuration to pods?",
+        "options": [
+            "ConfigMap",
+            "Secret",
+            "EnvVar"
+        ],
+        "answer": "ConfigMap"
+    },
+    {
+        "question": "Which probe checks if a container is ready to accept traffic?",
+        "options": [
+            "Readiness Probe",
+            "Liveness Probe",
+            "Startup Probe"
+        ],
+        "answer": "Readiness Probe"
+    },
+    {
+        "question": "What does a 'ReplicaSet' ensure?",
+        "options": [
+            "A specified number of pod replicas are running",
+            "Pods are unique",
+            "Nodes are healthy"
+        ],
+        "answer": "A specified number of pod replicas are running"
+    },
+    {
+        "question": "Which component selects which node an unscheduled pod should run on?",
+        "options": [
+            "kube-scheduler",
+            "kube-apiserver",
+            "controller-manager"
+        ],
+        "answer": "kube-scheduler"
+    },
+    {
+        "question": "What is 'Helm'?",
+        "options": [
+            "Package manager for Kubernetes",
+            "Container runtime",
+            "Monitoring tool"
+        ],
+        "answer": "Package manager for Kubernetes"
+    }
+]

@@ -1,19 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import random
 
-# Globalna varijabla s pitanjima - ona može ostati vani.
-questions = [
-    {"question": "Glavni grad Hrvatske?", "options": ["Zagreb", "Split", "Rijeka"], "answer": "Zagreb"},
-    {"question": "Najveći hrvatski otok?", "options": ["Krk", "Cres", "Hvar"], "answer": "Cres"},
-    {"question": "Autor 'Pjesnika u nevolji'?", "options": ["Krleža", "Andrić", "Šenoa"], "answer": "Krleža"},
-    {"question": "Koji je najviši vrh svijeta?", "options": ["Kilimanjaro", "Everest", "Mont Blanc"], "answer": "Everest"},
-    {"question": "Tko je bio prvi predsjednik Hrvatske?", "options": ["Tuđman", "Mesić", "Josipović"], "answer": "Tuđman"},
-    {"question": "Koji planet je poznat kao Crveni planet?", "options": ["Venera", "Mars", "Jupiter"], "answer": "Mars"},
-    {"question": "U kojoj godini je počeo Drugi svjetski rat?", "options": ["1939", "1941", "1945"], "answer": "1939"},
-    {"question": "Koji ocean je najveći na svijetu?", "options": ["Atlantski", "Tihi", "Indijski"], "answer": "Tihi"},
-    {"question": "Tko je napisao 'Romeo i Julija'?", "options": ["Shakespeare", "Dante", "Goethe"], "answer": "Shakespeare"},
-    {"question": "U kojem gradu su održane Olimpijske igre 2008.?", "options": ["Peking", "London", "Atina"], "answer": "Peking"}
-]
+import json
+import os
+
+def load_questions():
+    file_path = os.path.join(os.path.dirname(__file__), 'questions.json')
+    with open(file_path, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+questions = load_questions()
 
 def create_app():
     # Inicijalizacija aplikacije je sada unutar ove funkcije.
@@ -29,7 +25,7 @@ def create_app():
     @app.route('/quiz', methods=['GET', 'POST'])
     def quiz():
         if 'questions' not in session:
-            session['questions'] = random.sample(questions, 3)
+            session['questions'] = random.sample(questions, 10)
             session['current'] = 0
             session['score'] = 0
             session['answers'] = []  # Lista za pohranu odgovora
