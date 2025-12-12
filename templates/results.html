@@ -1,27 +1,54 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Rezultati Kviza</title>
+    <title>Quiz Results</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        .answer { margin: 20px; text-align: left; }
-        .correct { color: green; }
-        .incorrect { color: red; }
-        a { padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 5px; }
-        a:hover { background: #218838; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .answer {
+            margin: 20px;
+            text-align: left;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        a {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background: #218838;
+        }
     </style>
 </head>
+
 <body>
-    <h1>Vaš rezultat: {{ score }} od {{ total }}</h1>
-    <h2>Pregled odgovora</h2>
+    <h1>Your Score: {{ score }} of {{ total }}</h1>
+    <h2>Answer Review</h2>
     {% for answer in answers %}
-        <div class="answer">
-            <p><strong>Pitanje:</strong> {{ answer.question }}</p>
-            <p class="{% if answer.user_answer == answer.correct_answer %}correct{% else %}incorrect{% endif %}">
-                Vaš odgovor: {{ answer.user_answer }} | Točan odgovor: {{ answer.correct_answer }}
-            </p>
-        </div>
+    <div class="answer">
+        <p><strong>Question:</strong> {{ answer.question }}</p>
+        <p class="{% if answer.user_answer == answer.correct_answer %}correct{% else %}incorrect{% endif %}">
+            Your answer: {{ answer.user_answer }} | Correct answer: {{ answer.correct_answer }}
+        </p>
+    </div>
     {% endfor %}
-    <a href="/">Igraj ponovo</a>
+    <a href="/">Play Again</a>
 </body>
+
 </html>

@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Kviz - Pitanje {{ current }}</title>
+    <title>Quiz - Question {{ current }}</title>
 </head>
+
 <body>
-    <h1>Pitanje {{ current }} od {{ total }}</h1>
+    <h1>Question {{ current }} of {{ total }}</h1>
     <p>{{ question.question }}</p>
     <form method="post">
         {% for option in question.options %}
-            <input type="radio" name="answer" value="{{ option }}" required> {{ option }}<br>
+        <input type="radio" name="answer" value="{{ option }}" required> {{ option }}<br>
         {% endfor %}
-        <button type="submit">Pošalji</button>
+        <button type="submit">Submit</button>
     </form>
 </body>
+
 </html>
