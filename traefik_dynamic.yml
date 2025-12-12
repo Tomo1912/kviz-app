@@ -1,0 +1,4 @@
+tls:
+  certificates:
+    - certFile: /certs/fullchain.cer
+      keyFile: /certs/kvizap.duckdns.org.key

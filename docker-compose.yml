@@ -6,19 +6,17 @@ services:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--providers.file.filename=/etc/traefik/dynamic_conf.yml"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.myresolver.acme.email=tomartic93@gmail.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"
       - "443:443"
       - "8080:8080"
     volumes:
-      - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./traefik_dynamic.yml:/etc/traefik/dynamic_conf.yml:ro"
+      - "/root/.acme.sh/kvizap.duckdns.org_ecc:/certs:ro"
     networks:
       - kviz-network
     restart: unless-stopped
@@ -48,7 +46,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.kviz.rule=Host(`kvizap.duckdns.org`)"
       - "traefik.http.routers.kviz.entrypoints=websecure"
-      - "traefik.http.routers.kviz.tls.certresolver=myresolver"
+      - "traefik.http.routers.kviz.tls=true"
       - "traefik.http.services.kviz.loadbalancer.server.port=80"
       # Redirect HTTP to HTTPS
       - "traefik.http.routers.kviz-http.rule=Host(`kvizap.duckdns.org`)"
