@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import random
+from datetime import timedelta
 
 import json
 import os
@@ -14,7 +15,15 @@ questions = load_questions()
 def create_app():
     # Inicijalizacija aplikacije je sada unutar ove funkcije.
     app = Flask(__name__)
-    app.secret_key = 'super-secret-key'
+
+    # Security: Use environment variable for secret key, fallback to random for dev
+    app.secret_key = os.environ.get('SECRET_KEY', os.urandom(24))
+
+    # Security: Session expires after 30 minutes of inactivity
+    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
+    app.config['SESSION_COOKIE_SECURE'] = True  # Only send cookie over HTTPS
+    app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JavaScript access
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # CSRF protection
 
     # Sve rute su sada definirane unutar 'create_app' funkcije.
     @app.route('/')

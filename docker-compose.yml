@@ -3,7 +3,7 @@ services:
     image: traefik:v3.0
     container_name: traefik
     command:
-      - "--api.insecure=true"
+      # Security: Removed --api.insecure=true (was exposing dashboard without auth)
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.file.filename=/etc/traefik/dynamic_conf.yml"
@@ -12,7 +12,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
+      # Security: Removed port 8080 (Traefik dashboard)
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./traefik_dynamic.yml:/etc/traefik/dynamic_conf.yml:ro"
